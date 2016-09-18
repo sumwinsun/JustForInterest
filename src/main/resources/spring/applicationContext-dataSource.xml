@@ -68,7 +68,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="removeAbandoned" value="true"/>
         <!-- 1800秒，也就是30分钟 -->
         <property name="removeAbandonedTimeout" value="1800"/>
-        <!-- 关闭abanded连接时输出错误日志 -->
+        <!-- 关闭abandoned连接时输出错误日志 -->
         <property name="logAbandoned" value="true"/>
 
         <!-- 配置监控统计拦截的filters-->
@@ -82,5 +82,12 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
     </bean>
     <!-- 使用阿里的druid配置数据源 end-->
 
+    <!-- 配置redis资源 start-->
+    <bean id="redis" class="com.sumwinsun.common.spring.JedisSpring">
+        <constructor-arg name="ip" index="0" value="localhost"></constructor-arg>
+        <constructor-arg name="port" index="1" value="6379"></constructor-arg>
+        <constructor-arg name="auth" index="2" value="interdb"></constructor-arg>
+    </bean>
+    <!-- 配置redis资源 end-->
 
 </beans>

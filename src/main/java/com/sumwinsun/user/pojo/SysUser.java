@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SysUser {
     private String sysUserId;
-
+    //  登陆用户名，必填
     private String sysUserLoginName;
 
     private String sysUserLoginPassword;
@@ -41,9 +41,20 @@ public class SysUser {
 
     private String sysUserQqId;
 
-    public String getSysUserId() {
-        return sysUserId;
+    public SysUser() {  }
+
+    public SysUser(String sysUserLoginName, String sysUserLoginPassword, String sysUserStatus, String sysUserType, String sysUserIsEmailActive, String sysUserIsMobileActive, String sysUserEmail, String sysUserMobile) {
+        this.sysUserLoginName = sysUserLoginName;
+        this.sysUserLoginPassword = sysUserLoginPassword;
+        this.sysUserStatus = sysUserStatus;
+        this.sysUserType = sysUserType;
+        this.sysUserIsEmailActive = sysUserIsEmailActive;
+        this.sysUserIsMobileActive = sysUserIsMobileActive;
+        this.sysUserEmail = sysUserEmail;
+        this.sysUserMobile = sysUserMobile;
     }
+
+    public String getSysUserId() { return sysUserId; }
 
     public void setSysUserId(String sysUserId) {
         this.sysUserId = sysUserId;

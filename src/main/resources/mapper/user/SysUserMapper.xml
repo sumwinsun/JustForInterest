@@ -4,4 +4,125 @@
     <select id="getHelloWords" resultType="string">
         SELECT words from system_info where id = '1'
     </select>
+    <insert id="addSysUser" parameterType="com.sumwinsun.user.pojo.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sysUserId != null" >
+                `sys_user_id`,
+            </if>
+            <if test="sysUserLoginName != null" >
+                `sys_user_login_name`,
+            </if>
+            <if test="sysUserLoginPassword != null" >
+                `sys_user_login_password`,
+            </if>
+            <if test="sysUserStatus != null" >
+                `sys_user_status`,
+            </if>
+            <if test="sysUserIsDelete != null" >
+                `sys_user_is_delete`,
+            </if>
+            <if test="sysUserRegisterDatetime != null" >
+                `sys_user_register_datetime`,
+            </if>
+            <if test="sysUserRegisterSource != null" >
+                `sys_user_register_source`,
+            </if>
+            <if test="sysUserType != null" >
+                `sys_user_type`,
+            </if>
+            <if test="sysUserSex != null" >
+                `sys_user_sex`,
+            </if>
+            <if test="sysUserIsEmailActive != null" >
+                `sys_user_is_email_active`,
+            </if>
+            <if test="sysUserIsMobileActive != null" >
+                `sys_user_is_mobile_active`,
+            </if>
+            <if test="sysUserRegisterType != null" >
+                `sys_user_register_type`,
+            </if>
+            <if test="sysUserPayPassword != null" >
+                `sys_user_pay_passwrod`,
+            </if>
+            <if test="sysUserIcon != null" >
+                `sys_user_icon`,
+            </if>
+            <if test="sysUserRealName != null" >
+                `sys_user_real_name`,
+            </if>
+            <if test="sysUserEmail != null" >
+                `sys_user_email`,
+            </if>
+            <if test="sysUserMobile != null" >
+                `sys_user_mobile`,
+            </if>
+            <if test="sysUserWeiboId != null" >
+                `sys_user_weibo_id`,
+            </if>
+            <if test="sysUserQqId != null" >
+                `sys_user_qq_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sysUserId != null" >
+                #{sysUserId,jdbcType=BIGINT},
+            </if>
+            <if test="sysUserLoginName != null" >
+                #{sysUserLoginName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserLoginPassword != null" >
+                #{sysUserLoginPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserStatus != null" >
+                #{sysUserStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserIsDelete != null" >
+                #{sysUserIsDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserRegisterDatetime != null" >
+                #{sysUserRegisterDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sysUserRegisterSource != null" >
+                #{sysUserRegisterSource,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserType != null" >
+                #{sysUserType,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserSex != null" >
+                #{sysUserSex,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserIsEmailActive != null" >
+                #{sysUserIsEmailActive,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserIsMobileActive != null" >
+                #{sysUserIsMobileActive,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserRegisterType != null" >
+                #{sysUserRegisterType,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserPayPassword != null" >
+                #{sysUserPayPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserIcon != null" >
+                #{sysUserIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserRealName != null" >
+                #{sysUserRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserEmail != null" >
+                #{sysUserEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserMobile != null" >
+                #{sysUserMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserWeiboId != null" >
+                #{sysUserWeiboId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysUserQqId != null" >
+                #{sysUserQqId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 </mapper>
