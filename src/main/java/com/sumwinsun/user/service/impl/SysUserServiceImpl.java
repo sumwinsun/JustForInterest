@@ -1,6 +1,7 @@
 package com.sumwinsun.user.service.impl;
 
 import com.sumwinsun.common.spring.JedisSpring;
+import com.sumwinsun.user.enums.UserRegisterSourceEnum;
 import com.sumwinsun.user.mapper.SysUserMapper;
 import com.sumwinsun.user.pojo.SysUser;
 import com.sumwinsun.user.service.SysUserService;
@@ -29,12 +30,13 @@ public class SysUserServiceImpl implements SysUserService{
 
     @Override
     public void addSysUser(SysUser user) {
-        user.setSysUserId(UUID.randomUUID().toString());
-        user.setSysUserIsDelete("N");
-        user.setSysUserRegisterSource("com");
-        user.setSysUserRegisterType("company");
-        user.setSysUserType("manager");
-        user.setSysUserRegisterDatetime(new Date());
+
         sysUserMapper.addSysUser(user);
+    }
+
+    @Override
+    public SysUser getUserById(String id) {
+        SysUser user = sysUserMapper.getUserById(id);
+        return user;
     }
 }

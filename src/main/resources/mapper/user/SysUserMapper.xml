@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sumwinsun.user.mapper.SysUserMapper" >
+
     <select id="getHelloWords" resultType="string">
         SELECT words from system_info where id = '1'
     </select>
+
     <insert id="addSysUser" parameterType="com.sumwinsun.user.pojo.SysUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -125,4 +127,9 @@
             </if>
         </trim>
     </insert>
+
+    <select id="getUserById" parameterType="string" resultType="com.sumwinsun.user.pojo.SysUser">
+        SELECT * from sys_user WHERE sys_user_id = #{id}
+    </select>
+
 </mapper>

@@ -9,4 +9,6 @@ public interface SysUserService {
     String getHelloWords();
 
     void addSysUser(SysUser user);
+
+    SysUser getUserById(String id);
 }

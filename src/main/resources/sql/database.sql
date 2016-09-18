@@ -26,7 +26,7 @@ CREATE TABLE `sys_user` (
   `sys_user_status` VARCHAR(1) NOT NULL,
   `sys_user_is_delete` VARCHAR(1) NOT NULL,
   `sys_user_register_datetime` DATETIME NOT NULL,
-  `sys_user_register_source` VARCHAR(20) NOT NULL,
+  `sys_user_register_source` VARCHAR(20) DEFAULT NULL,
   `sys_user_type` VARCHAR(20) NOT NULL,
   `sys_user_sex` VARCHAR(1) NOT NULL,
   `sys_user_is_email_active` VARCHAR(1) NOT NULL,
@@ -49,4 +49,26 @@ INSERT  INTO `sys_user`(`sys_user_id`,`sys_user_login_name`,`sys_user_login_pass
 INSERT  INTO `sys_user`(`sys_user_id`,`sys_user_login_name`,`sys_user_login_password`,`sys_user_status`,`sys_user_is_delete`,`sys_user_register_datetime`,`sys_user_register_source`,`sys_user_type`,`sys_user_sex`,`sys_user_is_email_active`,`sys_user_is_mobile_active`,`sys_user_register_type`,`sys_user_pay_passwrod`,`sys_user_icon`,`sys_user_real_name`,`sys_user_email`,`sys_user_mobile`,`sys_user_weibo_id`,`sys_user_qq_id`) VALUES ('4','YouMeek4','e10adc3949ba59abbe56e057f20f883e','0','N','2016-02-24 00:12:23','0','0','0','Y','Y','0','e10adc3949ba59abbe56e057f20f883e','','张觉恩4','363379444@qq.com','13800000004','','');
 INSERT  INTO `sys_user`(`sys_user_id`,`sys_user_login_name`,`sys_user_login_password`,`sys_user_status`,`sys_user_is_delete`,`sys_user_register_datetime`,`sys_user_register_source`,`sys_user_type`,`sys_user_sex`,`sys_user_is_email_active`,`sys_user_is_mobile_active`,`sys_user_register_type`,`sys_user_pay_passwrod`,`sys_user_icon`,`sys_user_real_name`,`sys_user_email`,`sys_user_mobile`,`sys_user_weibo_id`,`sys_user_qq_id`) VALUES ('5','YouMeek5','e10adc3949ba59abbe56e057f20f883e','0','N','2016-02-24 00:12:23','0','0','0','Y','Y','0','e10adc3949ba59abbe56e057f20f883e','','张觉恩5','363379445@qq.com','13800000005','','');
 
+# 活动模块 #
+#   活动明细表
+CREATE TABLE `activity_detail` (
+`activity_id` varchar(64) NOT NULL,
+`activity_name` varchar(128) NOT NULL,
+`activity_prize_id` varchar(64) NULL,
+`activity_start_time` datetime NOT NULL,
+`activity_end_time` datetime NOT NULL,
+`activity_create_time` datetime NOT NULL,
+`activity_desc` text NULL,
+PRIMARY KEY (`id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+
+#   活动奖品表
+CREATE TABLE `activity_prize` (
+`prize_id` varchar(64) NOT NULL,
+`prize_name` varchar(64) NOT NULL,
+`prize_num` int DEFAULT 0,
+`prize_add_time` datetime NOT NULL,
+`prize_desc` text NULL,
+PRIMARY KEY (`prize_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;

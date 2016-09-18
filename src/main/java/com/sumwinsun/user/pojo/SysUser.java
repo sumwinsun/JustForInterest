@@ -24,7 +24,7 @@ public class SysUser {
     private String sysUserIsEmailActive;
 
     private String sysUserIsMobileActive;
-
+//  字段意义不明，暂时抛弃
     private String sysUserRegisterType;
 
     private String sysUserPayPassword;
