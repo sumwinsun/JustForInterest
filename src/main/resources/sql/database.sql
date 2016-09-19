@@ -59,7 +59,7 @@ CREATE TABLE `activity_detail` (
 `activity_end_time` datetime NOT NULL,
 `activity_create_time` datetime NOT NULL,
 `activity_desc` text NULL,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`activity_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
@@ -71,4 +71,16 @@ CREATE TABLE `activity_prize` (
 `prize_add_time` datetime NOT NULL,
 `prize_desc` text NULL,
 PRIMARY KEY (`prize_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+#  秒杀成功记录表
+CREATE TABLE `activity_killed` (
+`kill_id` varchar(64) NOT NULL,
+`kill_user_id` varchar(64) NULL,
+`kill_state` int NULL,
+`kill_create_time` datetime NULL,
+`kill_prize_id` varchar(64) NOT NULL,
+`kill_activity_id` varchar(64) NOT NULL,
+PRIMARY KEY (`kill_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
