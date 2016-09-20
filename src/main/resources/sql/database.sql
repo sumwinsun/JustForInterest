@@ -115,6 +115,10 @@ CREATE PROCEDURE `execute_seckill`(IN v_activity_id varchar(64),IN v_kill_phone 
       ELSEIF (insert_count < 0) THEN ROLLBACK;
         SET o_result = -2;
       ELSE
+        SELECT prize_num INTO insert_count FROM activity_prize WHERE prize_id = (SELECT activity_prize_id FROM activity_detail where activity_id = v_activity_id);
+        IF (insert_count = 0) THEN
+          UPDATE activity_detail SET activity_state = '2' WHERE activity_id = v_activity_id;# 2为超时结束
+        END IF;
         COMMIT;
         SET o_result = 1;
       END IF;
