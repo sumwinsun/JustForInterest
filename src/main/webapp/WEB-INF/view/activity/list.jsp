@@ -42,7 +42,7 @@
 									<fmt:formatDate value="${sk.activityCreateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								</td>
 								<td>
-									<a class="btn btn-info" href="/activity/${sk.activityId}/detail">link</a>
+									<a class="btn btn-info" href="<%=path%>/activity/${sk.activityId}/detail">link</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -57,4 +57,16 @@
 <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script	src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$.ajax({
+			url:"<%=path%>/user/hello",
+			success:function () {
+					setTimeout(function () {
+						window.location.href = "<%=path%>";
+					},1000)
+			}
+		})
+	})
+</script>
 </html>

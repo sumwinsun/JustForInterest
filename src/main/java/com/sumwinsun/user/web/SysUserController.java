@@ -20,7 +20,7 @@ import java.util.UUID;
  * Created by Administrator on 2016/9/14 0014.
  */
 @Controller
-@RequestMapping(value = "sysUser")
+@RequestMapping(value = "user")
 public class SysUserController {
     private static final Logger log = LoggerFactory.getLogger(SysUserController.class);
     @Resource

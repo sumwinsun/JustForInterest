@@ -1,18 +1,19 @@
 //存放主要交互逻辑js代码-->>模块化
 //调用方法 ：seckill.detail.init({})
+var path = "";//定义项目部署的路径，从jsp页面调用init的时候传递
 var seckill = {
 	//封装秒杀相关ajax的Url
 	Url : {
 		now : function(){
 			//获取当前服务器时间Url
-			return "/activity/time/now";
+			return path+"/activity/time/now";
 		},
 		exposer : function(activityId){
 			//暴露秒杀地址Url
-			return "/activity/"+activityId+"/exposer";
+			return path+"/activity/"+activityId+"/exposer";
 		},
 		execution : function(activityId,md5){
-			return "/activity/"+activityId+"/"+md5+"/execution";
+			return path+"/activity/"+activityId+"/"+md5+"/execution";
 		}
 	},
 	//验证手机号
@@ -120,7 +121,7 @@ var seckill = {
 					console.log("inputPhone="+inputPhone);//TODO
 					if(seckill.validatePhone(inputPhone)){
 						//验证通过，将号码保存至Cookie(expires:7  保存7天; path:"/activity"Cookie保存路径)
-						$.cookie("killPhone",inputPhone,{expires : 7 , path : "/activity"});
+						$.cookie("killPhone",inputPhone,{expires : 7 , path : "<%=path%>"});
 						window.location.reload();
 					}else{
 						$("#killPhoneMessage").hide().html("<label class=\"label label-danger\">手机号错误</label>").show(300);
@@ -131,6 +132,8 @@ var seckill = {
 			var startTime = params['startTime'];
 			var endTime = params['endTime'];
 			var activityId = params['activityId'];
+			path = params['path'];
+			console.log(path);
 			//获取系统时间，用于计时交互
 			/*	Ajax详解：
 			 * 	$.get(seckill.Url.now , {} , function(){})
@@ -146,7 +149,7 @@ var seckill = {
 					console.log("result="+JSON.stringify(result));
 				}
 			})
-			
+
 		}
 	}
 }

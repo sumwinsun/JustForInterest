@@ -7,4 +7,5 @@ package com.sumwinsun.common.config;
 public class SystemMsg {
     public static String INNER_ERROR = "系统内部异常";
 
+    public static String USER_KEY = "USER_KEY";
 }

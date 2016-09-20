@@ -68,7 +68,7 @@
 <script src="http://cdn.bootcss.com/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
 
 <!-- 引入本地js资源 -->
-<script src="/js/activity/seckill.js" type="text/javascript"></script>
+<script src="<%=path%>/js/activity/seckill.js" type="text/javascript"></script>
 <!-- 调用本地js资源，完成交互 -->
 <script type="text/javascript">
 	$(function(){
@@ -76,7 +76,8 @@
 		seckill.detail.init({
 			activityId : ${data.data.activityId},
 			startTime : ${data.data.activityStartTime.time},//获取开始时间的毫秒值
-			endTime : ${data.data.activityEndTime.time}
+			endTime : ${data.data.activityEndTime.time},
+			path : "<%=path%>"
 		});
 	})
 </script>
