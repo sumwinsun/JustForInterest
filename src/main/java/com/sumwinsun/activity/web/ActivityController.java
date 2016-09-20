@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class ActivityController {
             data.setMsg(SystemMsg.INNER_ERROR);
         }
         model.addAttribute("data", data);
-        return "view/activity/list";
+        return "/activity/list";
     }
 
     @RequestMapping(value = "/{activityId}/detail")
@@ -57,7 +58,7 @@ public class ActivityController {
             data.setMsg(SystemMsg.INNER_ERROR);
         }
         model.addAttribute("data",data);
-        return "view/activity/detail";
+        return "/activity/detail";
     }
 
     /**
@@ -93,10 +94,17 @@ public class ActivityController {
     @ResponseBody
     public RequestResult<SeckillExecution> activitySeckillExecution(@PathVariable("activityId")String activityId, @PathVariable("md5Key")String md5Key
         , @CookieValue(value = "killPhone",required = false)String killPhone){
-        //TODO
         if(StringUtils.isEmpty(killPhone))
             return new RequestResult<>(false,"未注册");
         SeckillExecution seckillExecution = activityService.activitySeckillExecution(activityId,md5Key,killPhone);
         return new RequestResult<>(true, seckillExecution);
+    }
+
+    @RequestMapping(value = "/time/now" , method = RequestMethod.GET , produces = {"application/json;charest=UTF-8"})
+    @ResponseBody
+    public RequestResult<Long> time(){
+        Date now = new Date();
+
+        return new RequestResult<>(true, now.getTime());
     }
 }

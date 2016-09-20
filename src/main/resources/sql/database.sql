@@ -5,7 +5,6 @@ CREATE USER 'sum'@'%' IDENTIFIED BY 'sum';
 GRANT ALL PRIVILEGES ON interdb.* TO 'sum'@'%';
 FLUSH PRIVILEGES;
 
-
 #基础表创建
 # system_info 系统版本表
 CREATE TABLE system_info(

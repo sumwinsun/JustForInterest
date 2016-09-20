@@ -1,14 +1,15 @@
 package com.sumwinsun.activity.pojo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ActivityDetail {
   private String activityId;
   private String activityName;
   private String activityPrizeId;
-  private java.sql.Timestamp activityStartTime;
-  private java.sql.Timestamp activityEndTime;
-  private java.sql.Timestamp activityCreateTime;
+  private Date activityStartTime;
+  private Date activityEndTime;
+  private Date activityCreateTime;
   private String activityDesc;
 
   private ActivityPrize activityPrize;
@@ -39,27 +40,41 @@ public class ActivityDetail {
     this.activityPrizeId = activityPrizeId;
   }
 
-  public Timestamp getActivityStartTime() {
+  @Override
+  public String toString() {
+    return "ActivityDetail{" +
+            "activityId='" + activityId + '\'' +
+            ", activityName='" + activityName + '\'' +
+            ", activityPrizeId='" + activityPrizeId + '\'' +
+            ", activityStartTime=" + activityStartTime +
+            ", activityEndTime=" + activityEndTime +
+            ", activityCreateTime=" + activityCreateTime +
+            ", activityDesc='" + activityDesc + '\'' +
+            ", activityPrize=" + activityPrize +
+            '}';
+  }
+
+  public Date getActivityStartTime() {
     return activityStartTime;
   }
 
-  public void setActivityStartTime(Timestamp activityStartTime) {
+  public void setActivityStartTime(Date activityStartTime) {
     this.activityStartTime = activityStartTime;
   }
 
-  public Timestamp getActivityEndTime() {
+  public Date getActivityEndTime() {
     return activityEndTime;
   }
 
-  public void setActivityEndTime(Timestamp activityEndTime) {
+  public void setActivityEndTime(Date activityEndTime) {
     this.activityEndTime = activityEndTime;
   }
 
-  public Timestamp getActivityCreateTime() {
+  public Date getActivityCreateTime() {
     return activityCreateTime;
   }
 
-  public void setActivityCreateTime(Timestamp activityCreateTime) {
+  public void setActivityCreateTime(Date activityCreateTime) {
     this.activityCreateTime = activityCreateTime;
   }
 
@@ -77,19 +92,5 @@ public class ActivityDetail {
 
   public void setActivityPrize(ActivityPrize activityPrize) {
     this.activityPrize = activityPrize;
-  }
-
-  @Override
-  public String toString() {
-    return "ActivityDetail{" +
-            "activityId='" + activityId + '\'' +
-            ", activityName='" + activityName + '\'' +
-            ", activityPrizeId='" + activityPrizeId + '\'' +
-            ", activityStartTime=" + activityStartTime +
-            ", activityEndTime=" + activityEndTime +
-            ", activityCreateTime=" + activityCreateTime +
-            ", activityDesc='" + activityDesc + '\'' +
-            ", activityPrize=" + activityPrize +
-            '}';
   }
 }

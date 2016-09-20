@@ -3,6 +3,7 @@ package com.sumwinsun.activity.mapper;
 import com.sumwinsun.activity.pojo.ActivityDetail;
 import com.sumwinsun.activity.pojo.ActivityKilled;
 import com.sumwinsun.activity.pojo.ActivityPrize;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface ActivityMapper {
 
     void activitySeckillExecution(Map<String, Object> map);
 
-    ActivityKilled queryActivityKilled(String activityId, String killPhone);
+    ActivityKilled queryActivityKilled(@Param("activityId") String activityId, @Param("killPhone") String killPhone);
 }

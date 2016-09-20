@@ -11,13 +11,13 @@
     </select>
 
     <select id="queryActivityPrizeByAcId" parameterType="string" resultType="com.sumwinsun.activity.pojo.ActivityPrize">
-        select * from activity_prize where prize_id = #{prizeId}
+        select * from activity_prize where prize_id = (select prize_id from activity_detail where activity_id = #{activityId})
     </select>
     <!-- statementType：STATEMENT（非预编译），PREPARED（预编译）或CALLABLE中的任意一个，
     这就告诉 MyBatis 分别使用Statement，PreparedStatement或者CallableStatement。默认：PREPARED。这里因为调用了存储过程，需要回调。 -->
     <select id="activitySeckillExecution" parameterType="map" statementType="CALLABLE">
-        call execute_seckill(${activityId, jdbcType = VARCHAR, mode = IN}, ${killPhone, jdbcType = VARCHAR, mode = IN}
-        , ${now, jdbcType = TIMESTAMP, mode = IN}, ${result, jdbcType = INT, mode = OUT})
+        call execute_seckill(#{activityId, jdbcType = VARCHAR, mode=IN}, #{killPhone, jdbcType = VARCHAR, mode=IN},
+         #{now, jdbcType = TIMESTAMP, mode=IN}, #{result, jdbcType = INTEGER, mode=OUT})
     </select>
 
     <select id="queryActivityKilled" parameterType="string" resultType="com.sumwinsun.activity.pojo.ActivityKilled">
