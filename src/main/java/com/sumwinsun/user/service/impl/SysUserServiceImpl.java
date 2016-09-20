@@ -1,15 +1,12 @@
 package com.sumwinsun.user.service.impl;
 
 import com.sumwinsun.common.spring.JedisSpring;
-import com.sumwinsun.user.enums.UserRegisterSourceEnum;
 import com.sumwinsun.user.mapper.SysUserMapper;
 import com.sumwinsun.user.pojo.SysUser;
 import com.sumwinsun.user.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by Administrator on 2016/9/14 0014.

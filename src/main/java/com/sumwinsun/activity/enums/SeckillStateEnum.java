@@ -5,8 +5,8 @@ package com.sumwinsun.activity.enums;
  * Created by Administrator on 2016/9/19 0019.
  */
 public enum SeckillStateEnum {
-    SUCCESS(0,"秒杀成功"),
-    END(1,"秒杀结束"),
+    SUCCESS(1,"秒杀成功"),
+    END(0,"秒杀结束"),
     REPEAT_KILL(-1,"重复秒杀"),
     INNER_ERROR(-2,"系统内部错误"),
     DATA_REWRITE(-3,"数据被篡改");
