@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sumwinsun.activity.mapper.ActivityMapper">
+
+    <select id="queryActivityList" resultType="com.sumwinsun.activity.pojo.ActivityDetail">
+        select * from activity_detail where activity_start_time <![CDATA[<]]> activity_end_time and activity_end_time <![CDATA[>]]> now() and activity_state = '0';
+    </select>
+
+    <select id="queryActivityDetail" parameterType="string" resultType="com.sumwinsun.activity.pojo.ActivityDetail">
+        select * from activity_detail where activity_id = #{activityId}
+    </select>
+
+    <select id="queryActivityPrizeByAcId" parameterType="string" resultType="com.sumwinsun.activity.pojo.ActivityPrize">
+        select * from activity_prize where prize_id = #{prizeId}
+    </select>
+    <!-- statementType：STATEMENT（非预编译），PREPARED（预编译）或CALLABLE中的任意一个，
+    这就告诉 MyBatis 分别使用Statement，PreparedStatement或者CallableStatement。默认：PREPARED。这里因为调用了存储过程，需要回调。 -->
+    <select id="activitySeckillExecution" parameterType="map" statementType="CALLABLE">
+        call execute_seckill(${activityId, jdbcType = VARCHAR, mode = IN}, ${killPhone, jdbcType = VARCHAR, mode = IN}
+        , ${now, jdbcType = TIMESTAMP, mode = IN}, ${result, jdbcType = INT, mode = OUT})
+    </select>
+
+    <select id="queryActivityKilled" parameterType="string" resultType="com.sumwinsun.activity.pojo.ActivityKilled">
+        select * from activity_killed where kill_user_id = #{killPhone} and kill_activity_id = #{activityId}
+    </select>
+</mapper>

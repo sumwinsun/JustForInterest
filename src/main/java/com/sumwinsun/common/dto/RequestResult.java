@@ -6,28 +6,28 @@ package com.sumwinsun.common.dto;
  * @since 2016年5月26日 15:24:18
  */
 public class RequestResult<T> {
-	private boolean success;
+	private boolean flag;
 	private T data;
-	private String error;//存放异常信息
+	private String msg;//存放异常信息
 	
 	public RequestResult() {}
 	//成功返回值的构造
-	public RequestResult(boolean success, T data) {
-		this.success = success;
+	public RequestResult(boolean flag, T data) {
+		this.flag = flag;
 		this.data = data;
 	}
-	//失败返回值的构造：false + error
-	public RequestResult(boolean success, String error) {
-		this.success = success;
-		this.error = error;
+	//失败返回值的构造：false + msg
+	public RequestResult(boolean flag, String msg) {
+		this.flag = flag;
+		this.msg = msg;
 	}
 	
 	
-	public boolean isSuccess() {
-		return success;
+	public boolean isFlag() {
+		return flag;
 	}
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 	public T getData() {
 		return data;
@@ -35,11 +35,11 @@ public class RequestResult<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
-	public String getError() {
-		return error;
+	public String getMsg() {
+		return msg;
 	}
-	public void setError(String error) {
-		this.error = error;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 }

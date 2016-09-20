@@ -59,6 +59,7 @@ CREATE TABLE `activity_detail` (
 `activity_end_time` datetime NOT NULL,
 `activity_create_time` datetime NOT NULL,
 `activity_desc` text NULL,
+`activity_state` varchar(2) NOT NULL,
 PRIMARY KEY (`activity_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -76,11 +77,55 @@ PRIMARY KEY (`prize_id`)
 
 #  秒杀成功记录表
 CREATE TABLE `activity_killed` (
-`kill_id` varchar(64) NOT NULL,
 `kill_user_id` varchar(64) NULL,
 `kill_state` int NULL,
 `kill_create_time` datetime NULL,
 `kill_prize_id` varchar(64) NOT NULL,
 `kill_activity_id` varchar(64) NOT NULL,
-PRIMARY KEY (`kill_id`)
+PRIMARY KEY (`kill_user_id`,'kill_activity_id')
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+#  执行秒杀存储过程
+#  row_count()函数，返回的是执行sql语句后的受影响函数
+#  row_count() = 0  未修改数据; > 0 返回修改的记录条数 ; < 0 sql错误/未执行sql
+#  START TRANSACTION; 开启事务
+#	 r_result返回结果：-1重复秒杀;-2系统异常;1秒杀成功;0秒杀结束
+CREATE PROCEDURE `execute_seckill`(IN v_activity_id varchar(64),IN v_kill_phone varchar(11),IN v_kill_time TIMESTAMP,OUT o_result int)
+  BEGIN
+    DECLARE insert_count int DEFAULT 0;
+    DECLARE the_prize_id VARCHAR(64);
+    START TRANSACTION;
+    SELECT activity_prize_id INTO the_prize_id FROM activity_detail WHERE activity_id = v_activity_id;
+    INSERT IGNORE INTO activity_killed (kill_state,kill_activity_id,kill_user_id,kill_create_time,kill_prize_id)
+    VALUES(0,v_activity_id,v_kill_phone,v_kill_time,the_prize_id);
+    SELECT ROW_COUNT() INTO insert_count;
+    IF (insert_count = 0) THEN	ROLLBACK;
+      SET o_result = -1;
+    ELSEIF (insert_count <0) THEN	ROLLBACK;
+      SET o_result = -2;
+    ELSE
+      UPDATE activity_prize SET prize_num = prize_num - 1
+      WHERE prize_id = (SELECT activity_prize_id FROM activity_detail where activity_id = v_activity_id)
+            AND (SELECT activity_start_time FROM activity_detail where activity_id = v_activity_id) < v_kill_time
+            AND (SELECT activity_end_time FROM activity_detail where activity_id = v_activity_id)  > v_kill_time
+            AND prize_num > 0;
+      SELECT ROW_COUNT() INTO insert_count;
+      IF(insert_count = 0) THEN ROLLBACK;
+        SET o_result = 0;
+      ELSEIF (insert_count < 0) THEN ROLLBACK;
+        SET o_result = -2;
+      ELSE
+        COMMIT;
+        SET o_result = 1;
+      END IF;
+    END IF;
+  END;
+
+#   测试存储过程
+SET @r_result = -3;
+CALL execute_seckill('1','15318271551',NOW(),@r_result);
+SELECT @r_result;
+
+
+

@@ -14,6 +14,20 @@ public class ActivityExposer {
 
     public ActivityExposer() { }
 
+    public ActivityExposer(boolean flag, String activityId, long start, long end, long now) {
+        this.flag = flag;
+        this.activityId = activityId;
+        this.start = start;
+        this.end = end;
+        this.now = now;
+    }
+
+    public ActivityExposer(boolean flag, String activityId, String md5Key) {
+        this.flag = flag;
+        this.activityId = activityId;
+        this.md5Key = md5Key;
+    }
+
     public boolean isFlag() {
         return flag;
     }
