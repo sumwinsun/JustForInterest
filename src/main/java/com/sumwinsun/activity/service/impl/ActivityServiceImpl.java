@@ -38,12 +38,20 @@ public class ActivityServiceImpl implements ActivityService {
     //  用于存储序列化的活动细节
     private RuntimeSchema<ActivityDetail> activityDetailRuntimeSchema = RuntimeSchema.createFrom(ActivityDetail.class);
     //  MD5加密拼接salt
-    private String salt = "";
+    private String salt = "sfd%$#=_pjbggq";
 
     @Override
     public List<ActivityDetail> queryActivityList() {
-
-        return activityMapper.queryActivityList();
+        List<ActivityDetail> list = activityMapper.queryActivityList();
+        ActivityPrize activityPrize ;
+        for (ActivityDetail activityDetail : list){
+            activityPrize = activityMapper.queryActivityPrizeByAcId(activityDetail.getActivityId());
+            if (null != activityPrize){
+                activityDetail.setActivityPrize(activityPrize);
+                activityPrize = null;
+            }
+        }
+        return list;
     }
 
     @Override
@@ -67,24 +75,32 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public ActivityExposer activityExposer(String activityId) throws ActivityException{
-        Jedis jedis = jedisSpring.getJedisSource();
-        ActivityDetail activityDetail ;
-        //先从缓存中读取，缓存中不存在再去读取数据库
-        byte[] bytes = jedis.get(activityId.getBytes());
-        if (null != bytes) {
-            activityDetail = activityDetailRuntimeSchema.newMessage();
-            ProtobufIOUtil.mergeFrom(bytes, activityDetail, activityDetailRuntimeSchema);
-        } else {
-            activityDetail = queryActivityDetail(activityId);
-            bytes = ProtobufIOUtil.toByteArray(activityDetail, activityDetailRuntimeSchema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
-            //将ActivityDetail存入缓存，设置1小时后失效；
-            jedis.setex(activityId.getBytes(), 60 * 60, bytes);
+        Jedis jedis = null;
+        String md5Key = null;
+        try {
+            jedis = jedisSpring.getJedisSource();
+            ActivityDetail activityDetail ;
+            //先从缓存中读取，缓存中不存在再去读取数据库
+            byte[] bytes = jedis.get(activityId.getBytes());
+            if (null != bytes) {
+                activityDetail = activityDetailRuntimeSchema.newMessage();
+                ProtobufIOUtil.mergeFrom(bytes, activityDetail, activityDetailRuntimeSchema);
+            } else {
+                activityDetail = queryActivityDetail(activityId);
+                bytes = ProtobufIOUtil.toByteArray(activityDetail, activityDetailRuntimeSchema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+                //将ActivityDetail存入缓存，设置1小时后失效；
+                jedis.setex(activityId.getBytes(), 60 * 60, bytes);
+            }
+            Date now = new Date();
+            //判断秒杀是否开始
+            if (now.before(activityDetail.getActivityStartTime()) || now.after(activityDetail.getActivityEndTime()))
+                return new ActivityExposer(false, activityId, activityDetail.getActivityStartTime().getTime(), activityDetail.getActivityEndTime().getTime(), now.getTime());
+            md5Key = getMD5Key(activityId);
+        } catch (ActivityException e) {
+            e.printStackTrace();
+        } finally {
+            jedis.close();
         }
-        Date now = new Date();
-        //判断秒杀是否开始
-        if (now.before(activityDetail.getActivityStartTime()) || now.after(activityDetail.getActivityEndTime()))
-            return new ActivityExposer(false, activityId, activityDetail.getActivityStartTime().getTime(), activityDetail.getActivityEndTime().getTime(), now.getTime());
-        String md5Key = getMD5Key(activityId);
         return new ActivityExposer(true, activityId, md5Key);
     }
 
