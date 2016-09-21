@@ -132,4 +132,7 @@
         SELECT * from sys_user WHERE sys_user_id = #{id}
     </select>
 
+    <select id="getUserByLoginName" parameterType="string" resultType="com.sumwinsun.user.pojo.SysUser">
+        SELECT * FROM sys_user WHERE sys_user_login_name = #{sysUserLoginName}
+    </select>
 </mapper>

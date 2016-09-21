@@ -15,4 +15,6 @@ public interface SysUserMapper {
     void addSysUser(SysUser user);
 
     SysUser getUserById(@Param("id") String id);
+
+    SysUser getUserByLoginName(String sysUserLoginName);
 }

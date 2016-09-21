@@ -36,4 +36,10 @@ public class SysUserServiceImpl implements SysUserService{
         SysUser user = sysUserMapper.getUserById(id);
         return user;
     }
+
+    @Override
+    public SysUser getUserByLoginName(String sysUserLoginName) {
+
+        return sysUserMapper.getUserByLoginName(sysUserLoginName);
+    }
 }

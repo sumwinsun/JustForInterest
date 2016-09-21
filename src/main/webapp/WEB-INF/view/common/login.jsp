@@ -33,25 +33,25 @@
 
 
                 <div class="login_form">
-                    <form action="http://www.js-css.cn" name="loginform" accept-charset="utf-8" id="login_form"
+                    <form action="<%=path%>/user/form/login" name="loginform" accept-charset="utf-8" id="login_form"
                           class="loginForm" method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
                             <label class="input-tips" for="u">帐号：</label>
                             <div class="inputOuter" id="uArea">
 
-                                <input type="text" id="u" name="username" class="inputstyle"/>
+                                <input type="text" id="u" name="sysUserLoginName" class="inputstyle"/>
                             </div>
                         </div>
                         <div class="pwdArea" id="pwdArea">
                             <label class="input-tips" for="p">密码：</label>
                             <div class="inputOuter" id="pArea">
 
-                                <input type="password" id="p" name="p" class="inputstyle"/>
+                                <input type="password" id="p" name="sysUserLoginPassword" class="inputstyle"/>
                             </div>
                         </div>
-
-                        <div style="padding-left:50px;margin-top:20px;"><input type="submit" value="登 录" style="width:150px;" class="button_blue"/></div>
+                        <input type="hidden" name="token" value="${token}">
+                        <div style="padding-left:50px;margin-top:20px;"><input type="button" value="登 录" style="width:150px;" class="button_blue" onclick="login()"/></div>
                     </form>
                 </div>
 
@@ -124,13 +124,29 @@
 <div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
 
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery.form.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/login/login.js"></script>
 <script type="text/javascript">
-    $(function () {
-        console.log("${token}");
-        console.log("${requestScope.token}");
-        console.log("${sessionScope.token}");
-    })
+function login() {
+    var form = $("form[name=loginform]");
+    var options  = {
+        url:'<%=path%>/user/form/login',
+        dataType : 'json',
+        success:function(data){
+            if (data && data['flag']) {
+                window.location.href = "<%=path%>/index.jsp";
+            } else {
+                alert(data['msg']);
+            }
+        }
+    };
+    form.ajaxSubmit(options);
+}
+//    function login() {
+//        var data = $("form[name=loginform]").submit();
+//        alert(data.msg)
+//        console.log(data);
+//    }
 </script>
 </body>
 </html>

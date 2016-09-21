@@ -11,4 +11,6 @@ public interface SysUserService {
     void addSysUser(SysUser user);
 
     SysUser getUserById(String id);
+
+    SysUser getUserByLoginName(String sysUserLoginName);
 }

@@ -2,6 +2,8 @@ package com.sumwinsun.user.web;
 
 import com.alibaba.druid.util.StringUtils;
 import com.sumwinsun.common.annotation.Token;
+import com.sumwinsun.common.config.SystemMsg;
+import com.sumwinsun.common.dto.RequestResult;
 import com.sumwinsun.common.spring.JedisSpring;
 import com.sumwinsun.user.enums.UserRegisterSourceEnum;
 import com.sumwinsun.user.pojo.SysUser;
@@ -77,16 +79,33 @@ public class SysUserController {
         return user;
     }
 
-    @RequestMapping(value = "form/register")
+    @RequestMapping(value = "form/login/index")
     @Token(save = true)
     public String registerUser(HttpServletRequest request){
-        System.out.println(request.getAttribute("token"));
-        System.out.println(request.getSession().getAttribute("token"));
-        System.out.println(request.getSession(false).getAttribute("token"));
-        System.out.println(request.getSession(true).getAttribute("token"));
-        return "/common/index";
+//        System.out.println(request.getAttribute("token"));
+//        System.out.println(request.getSession().getAttribute("token"));
+//        System.out.println("添加Token："+request.getSession(false).getAttribute("token"));
+//        System.out.println(request.getSession(true).getAttribute("token"));
+        return "common/login";
     }
 
+    @RequestMapping(value = "form/login")
+    @ResponseBody
+    @Token(remove = true)
+    public RequestResult login(SysUser user, HttpServletRequest request){
+//        System.out.println("是否删除Token：" + request.getSession(false).getAttribute("token"));
+        if (null == user || StringUtils.isEmpty(user.getSysUserLoginName()))
+            return new RequestResult(false,SystemMsg.NO_LOGINNAME_ERROR);
+        SysUser _user = sysUserService.getUserByLoginName(user.getSysUserLoginName());
+        if (null == _user){
+            return new RequestResult(false, SystemMsg.NO_USER_ERROR);
+        }
+        if (!StringUtils.isEmpty(user.getSysUserLoginPassword()) && user.getSysUserLoginPassword().equals(_user.getSysUserLoginPassword())){
+            request.getSession().setAttribute(SystemMsg.USER_KEY, _user);
+            return new RequestResult(true,SystemMsg.SUCCESS);
+        }
+        return new RequestResult(false, SystemMsg.PASSWORD_ERROR);
+    }
 
 
 }
