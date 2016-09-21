@@ -62,8 +62,9 @@
 		$.ajax({
 			url:"<%=path%>/user/hello",
 			success:function () {
+				console.log("success")
 					setTimeout(function () {
-						window.location.href = "<%=path%>";
+						window.location.href = "<%=path%>/index.jsp";
 					},1000)
 			}
 		})

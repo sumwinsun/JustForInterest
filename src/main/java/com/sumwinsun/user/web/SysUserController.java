@@ -1,6 +1,7 @@
 package com.sumwinsun.user.web;
 
 import com.alibaba.druid.util.StringUtils;
+import com.sumwinsun.common.annotation.Token;
 import com.sumwinsun.common.spring.JedisSpring;
 import com.sumwinsun.user.enums.UserRegisterSourceEnum;
 import com.sumwinsun.user.pojo.SysUser;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
 
@@ -74,5 +76,17 @@ public class SysUserController {
         SysUser user = sysUserService.getUserById(id);
         return user;
     }
+
+    @RequestMapping(value = "form/register")
+    @Token(save = true)
+    public String registerUser(HttpServletRequest request){
+        System.out.println(request.getAttribute("token"));
+        System.out.println(request.getSession().getAttribute("token"));
+        System.out.println(request.getSession(false).getAttribute("token"));
+        System.out.println(request.getSession(true).getAttribute("token"));
+        return "/common/index";
+    }
+
+
 
 }

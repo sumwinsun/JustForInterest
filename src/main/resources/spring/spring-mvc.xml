@@ -61,6 +61,11 @@
             <mvc:mapping path="/sysUser/*"/>
             <bean class="com.sumwinsun.common.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
+        <!--防止表单重复提交拦截器（Token注解实现）-->
+        <mvc:interceptor>
+            <mvc:mapping path="/*/form/**"/>
+            <bean class="com.sumwinsun.common.interceptor.TokenInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
     <!--拦截器配置 结束-->
 </beans>
