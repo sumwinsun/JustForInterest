@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xml:lang="zh">
+<head>
+    <meta charset="utf-8" >
+</head>
+<style type="text/css">
+    /*body{margin:0;padding:0;}*/
+</style>
+<body>
+
+<h4>1. 安装包官网下载地址：https://www.mongodb.com/download-center?jmp=nav#community</h4>
+	学习资料网址：
+		http://www.cnblogs.com/huangxincheng/archive/2012/02/18/2356595.html
+
+<h4>2. 启动Mongo：</h4>
+	2.1 启动之前，先在安装目录下创建"db"文件夹，用于存储数据
+	2.2 cmd 进入mongodb安装目录的bin目录下面，输入命令：
+		mongod --dbpath=D:\MongoDB\db 		<point>如果mongo启动异常，尝试看下说明，有一种解决方式是：删掉db下"*.lock"的文件</point>
+	2.3 启动另一个cmd窗口，进入mongobd安装目录\bin下，输入mango，连接本地mongo数据服务
+			窗口中js语法可使用
+<h4>3. 基础数据操作命令：</h4>
+	3.1 insert 操作
+		db.person.insert({"name":"Bob","age":1})
+		db.person.insert({"name":"Joe","age":2})
+	3.2 find 操作
+		db.person.find()	查询db下的所有person
+		db.person.find({"name":"Bob"}) 		在db库下，查询name字段为Bob的person
+	3.3 update 操作 		<desc>第一个参数为查找参数，第二个参数为修改参数</desc>
+		db.person.update({"name":"Bob"},{"name":"Bob","age":22}) 	此处为正确操作，下面演示坑爹操作
+		<star>db.person.update({"name":"Bob"},{"age":22}) 	这条命名，执行的修改会把name字段抹去，也就是说，这种update方法，需要提供所有的未修改字段</star>
+	3.4 remove 操作 		<desc>remove中如果不带参数将删除所有数据，呵呵，很危险的操作，在mongodb中是一个不可撤回的操作，三思而后行</desc>
+		db.person.remove({"name":"Bob"}) 	移除name为Bob的person
+		db.person.remove({}) 		移除db下的所有person
+		db.person.count()		查询db下person的个数
+
+<h4>4. 增删改查详解：</h4>
+	4.1 Insert 详解
+		由于支持js语法，所以此处可以这样操作：
+			var single = {"name":"jack","password":"123456","age":22,"address":{"province":"zhejiang","city":"hangzhou"},"favourite":["apple","banana"]}
+			db.user.insert(single)
+			single.name = "tom"
+			single.age = 21
+			single.address = {"province":"shandong","city":"weihai"}
+			single.favourite = ["money","mm"]
+			db.user.insert(single)
+			db.user.find()
+	4.2 Find 详解
+		4.2.1 日常常用查询类与Mongo的对应关系如下：
+			<1>  >, 	>=, 	<,		<=,		!=,	 =
+				"$gt", "$gte", "$lt", "$lte", "$ne",
+			<2>  And，		  OR，	 In，  NotIn
+				"无关键字“, "$or", "$in"，"$nin"
+			使用举例：
+				<1> db.user.find({"age":{$gt:21}}) 		查找age > 21 的user
+				<2> db.user.find({"name":"tom","age":21})  		and 条件查询
+					db.user.find({$or:[{"name":"tom"},{"name":"jack"}]}) 		or 条件查询
+					db.user.find({"address.province":{$in:["zhejiang","shandong"]}}) 	查询地址中省份为zhejiang和shandong的user
+		4.2.2 正则查询
+			db.user.find({"name":/^t/,"name":/m$/})
+		4.2.3 有时查询很复杂，很蛋疼，不过没关系，mongodb给我们祭出了大招，它就是$where，为什么这么说，是因为$where中的value，就是我们非常熟悉，非常热爱的js来助我们一马平川。
+			db.user.find({$where:function(){return this.name == "tom"}})
+
+	4.3 Update 修改操作
+		4.3.1
+
+</body>
+</html>

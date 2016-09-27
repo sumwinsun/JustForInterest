@@ -1,0 +1,229 @@
+	初始化工作：
+		1.设置字体为 YaHei Consolas Hybrid
+		2.如果使用搜狗输入法，先让快捷键失效，不然全局查找(Ctrl+Shift+F)会有冲突。并且输入法切换的Ctrl+Space也要改掉。
+		3.需要安装的插件：mybatis、
+
+		4.IDEA构建Maven项目的时候(IMPORTANT)
+			````需要在Properties中添加一个参数
+			archetypeCatalog=internal
+			，不加这个参数，在maven生成骨架的时候将会非常慢，有时候会直接卡住。
+
+
+
+
+
+
+
+1.转移IDEA索引目录（修改前关闭idea）
+	1.1：复制c盘中的 .IntelliJIdea2016.2 文件夹到 D:/Program files 中
+	
+	1.2：修改安装目录下bin文件夹下的idea.properties，修改前先备份
+	
+	修改后的8-23行代码为：
+	 idea.config.path=D:/Program Files/.IntelliJIdea2016.2/config
+
+	#---------------------------------------------------------------------
+	# Uncomment this option if you want to customize path to IDE system folder. Make sure you're using forward slashes.
+	#---------------------------------------------------------------------
+	 idea.system.path=D:/Program Files/.IntelliJIdea2016.2/system
+
+	#---------------------------------------------------------------------
+	# Uncomment this option if you want to customize path to user installed plugins folder. Make sure you're using forward slashes.
+	#---------------------------------------------------------------------
+	 idea.plugins.path=${idea.config.path}/plugins
+
+	#---------------------------------------------------------------------
+	# Uncomment this option if you want to customize path to IDE logs folder. Make sure you're using forward slashes.
+	#---------------------------------------------------------------------
+	 idea.log.path=${idea.system.path}/log
+	
+2.快捷键
+
+	<1> 书签（无标签） F11
+		书签（自定义标签） Ctrl+Shift+Num（相应的数字），切换书签命令：Ctrl+Num
+		
+	````IDEA中快速加注释的方法：输入 /** + Enter
+		
+	<2> Ctrl相关：
+		Ctrl+N 查找类
+		Ctrl+R 重命名
+		Ctrl+F 查找		F3下一个，Shift+F3上一个
+		Ctrl+J 代码提示（例如输入main按下此快捷键）	用于快速写入模板代码
+		Ctrl+P 方法参数提示显示
+		Ctrl+Delete 删除光标后的第一整块代码 （例如：what is your name？这句话，如果光标在最开头，则删除的是what这个单词）
+		Ctrl+Backspace 功能与Ctrl+Delete相反，逆向删除
+		Ctrl+W 选中光标附近区域代码，选中范围依次递增
+		Ctrl+左右 按单位左右调节光标
+		Ctrl+上下 光标不动，上下翻阅代码
+		Ctrl+E 最近文件的切换
+		Ctrl+Tab 切换编辑窗口 （也可使用Alt+左右）
+	````Ctrl+F12 查看文件的structure（结构），	该方法会自动识别展开光标所在位置的代码，此方式优于Alt+7
+	````Ctrl+F3 查找相同名称的单词下次出现的位置
+		Ctrl+G 跳转指定行
+		Ctrl+B 查看调用的方法，或对方法的引用（等同于Ctrl+左键点击）
+		Ctrl+加减符号	折叠或者展开代码
+		Ctrl+space	代码提示
+		Ctrl+O		重写方法
+		
+	<3> Shift相关：
+	````Shift+F6	全局修改类中的变量名称，用于重构
+		Shift+左键点击	点击窗口的标签，关闭窗口
+		Shift+F11	显示书签管理界面
+		Shift+Enter	下方另起一行（光标可在上行中任意位置）
+		Ctrl+Alt+Enter	上方另起一行（同上）
+		
+	<4> Alt相关：
+		Alt+/	注释，兼容前端
+	````Alt+F1	打开诸如project或Structure等的窗口
+			Alt+F1+C 查看当前文件的目录
+			Alt+F1+1 查看当前文件在项目中的位置
+	````Alt+F7	查看方法在哪里被调用过（全局查找），同样也可以查下变量的引用
+		Alt+鼠标选区	神奇的选区功能，可以统一添加一些相同的代码	（效果可以等同于 Alt+Shift+左键点击）
+		Alt+1,2,3...	切换窗口的显示 1代表Project，2代表Structure。。。
+		Alt+Enter	快速修复（可用于导包）
+	````Alt+Insert	生成代码（Getter、Setter、构造函数等）
+		Alt+左右	切换编辑窗口（也可Ctrl+Tab）
+		Alt+上下	同级代码切换查看（例如方法级别的同级查找
+		
+	<5> Ctrl+Shift相关：
+		Ctrl+Shift+F	指定查找范围或文件类型的查找、
+		Ctrl+Shift+R	指定查找范围或文件类型的替换、
+		Ctrl+Shift+U	大小写切换
+		Ctrl+Shift+Space	自动补全代码，诸如分号之类
+	````Ctrl+Shift+左右		按单元选择左右代码
+		Ctrl/Alt+Shift+上下		上下移动选中代码
+		Ctrl+Shift+V	剪切板
+		Ctrl+Shift+F7	高亮显示选中元素，并查找其在类中的匹配（Esc取消高亮选择） 等同于 Alt+F3
+		Ctrl+Shift+Num（相应的数字），切换书签命令：Ctrl+Num
+		Ctrl+Shift+C	复制文件所在的路径
+		Ctrl+Shift+J	去除改行后面的空格
+		Ctrl+Shift+E	最近编辑的文件
+		Ctrl+Shift+加减符	折叠或者展开所有代码（Ctrl+加减符号	折叠或者展开代码）
+		Ctrl+Shift+Enter	
+		
+	<6> Ctrl+Alt相关：
+	````Ctrl+Alt+左右	切换光标记忆的位置，可跨文件
+		Ctrl+Alt+上下	切换Find窗口查找（Ctrl+Shift+F 或者 Alt+F7）的文件位置
+	````Ctrl+Alt+O	优化导入的类和包 （导包Alt+Enter）
+		Ctrl+Alt+L	格式化代码（未选中代码，默认整个文件格式化；选中代码这只优化选中的部分）
+		Ctrl+Alt+I	单行格式化代码
+		Ctrl+Alt+Enter	上方另起一行（光标可在上行中任意位置）	Shift+Enter	下方另起一行
+	````Ctrl+Alt+T	选中代码环绕提示（try/catch、if等）
+	````Ctrl+Alt+Space	类名或接口名提示
+		Ctrl+Alt+B	调到具体的实现方法中
+		CTRL+ALT+F12      资源管理器打开文件夹
+		
+	<7> Alt+Shift相关：
+	````Alt+Shift+N		新建task窗口，应用场景：针对不同的业务，做不同的task切换
+		Alt+Shift+F		添加到收藏夹Favorite
+		Alt+Shift+左键点击		选中可批量更改的地方对代码进行批量调整
+	
+	<8>	其他：
+		F11		添加书签	查看书签Shift+F11
+		进入Ctrl+F后，使用F3键查下一个
+		Debug模式：F8下一个位置，F9下一个断点
+
+3.修改模板：(Ctrl+Shift+A 进入action查询功能，之后输入以下的单词进行修改工作)
+
+	3.1 修改File and Code Templates
+		选中要修改的类型，复制之后，进行修改即可（文件后缀名可自定义）
+		
+	3.2 修改Live Templates
+		左键点击选中需要添加模板的类型；
+		点击右侧添加按钮，在下面的弹出框输入关键字和描述，并加入模板代码；
+			模板代码中的变量可自定义，具体格式为 '$变量名$'，变量名相同的时候，会被同步修改，
+			点击edit Variables，编辑刚定义的变量，default value 中设置默认值需要加双引号，
+			后面的 skip ，如果打钩，则tab键切换不到该位置的变量，
+			
+		点击下方的Define 选择对应的代码类型；
+		
+		
+		注：$END$	定义光标结束位置
+			$SELECTION$ 	
+		
+		例子：
+		<%--$VAR0$ start--%>
+		$END$
+		<%--$VAR0$ end--%>
+		
+4.emmet语法（前端书写优化）
+	官网语法：http://docs.emmet.io/abbreviations/syntax/
+	http://www.w3cplus.com/tools/emmet-cheat-sheet.html
+		举例：div>ul>li*4 (+Tab)
+5.git相关：
+	安装百度
+	5.1 安装校验，初始化设置，上传本地文件至github：
+		5.1.1 打开Git Bash 在命令行输入 ：
+			cd ~/.ssh	如果提示 No such file，则进入下一步，添加ssh协议，此举的主要目的是建立与github远程通信的安全链接
+		5.1.2 继续输入以下命令 ：
+			ssh-keygen -t rsa -C "邮箱地址"
+			然后按Enter，再输入密码（输入的密码不会显示），确认密码
+		5.1.3 完成本地设置后，进入github后台设置ssh key（地址：https://github.com/settings/keys）
+			页面中间点击 New SSH Key，新设置一个Title
+			找到 C:\Users\Administrator\.ssh 路径下的 id_rsa.pub 文件，打开 Ctrl+A & Ctrl+C ，然后黏贴到github页面的 key文本框 中
+		5.1.4 现在如果要把本地项目上传到github上，还需要在github上建一个项目
+			输入项目名，描述，Create repository
+		5.1.5 本地设置Git信息，在Git Bash中输入：
+			git config --global user.name "我的用户名" 
+			git config --global user.email "我的邮箱"
+		5.1.6 本地文件上传到github
+			cd e:	进入文件存放磁盘
+			ls		查看磁盘下所有文件
+			cd test	进入test文件夹
+			git init 	初始化git参数
+			git add *	添加所有文件
+			git commit -m "提交描述"	提交代码
+			git remote add origin git@github.com:sumwinsun/test_demo.git		后面的git@github的地址为github上项目的ssh地址，origin为自定义参数，与push命令中的名称一致
+			git push -u origin master	执行push命令，并输入密码
+			
+	5.2 github使用相关：
+		5.2.1 网站功能键用途：
+			Watch	Star	Fork(别人的项目复制一份至自己的github仓库)
+		
+		5.2.2 IDEA添加github账号：
+			进入Settings设置，输入git，在Version Control的github项中，输入github账号和密码
+			
+		5.2.3 用IDEA从github上拉取项目：
+			工具栏 VCS --> Checkout from Version Control --> github
+			弹出的对话框选择项目、本地存储路径以及项目名称
+			
+	5.3 git add commit之后，如果想让github的master那边也完成修改，此时需要添加pull request
+		具体操作方法：
+			VCS --> Git --> Create pull request 或者 Ctrl + Shift + A 搜索 "Create pull request"
+		
+	5.4 github 上 fork 之后，IDEA 如何向原作者提交代码 (pull request)，具体操作步骤：
+		完成5.2.3步骤，在IDEA中Checkout出Fork的代码；
+		完成5.3步骤，提交本地代码更新至github上，我们Fork下来的项目上；
+		项目的master，处理我们提交过去的Pull请求，如果通过，会Merge合并项目，然后使用聊天工具等方式通知我们可以更新代码了；
+		收到代码变更消息后，我们在IDEA中新建一个分支Branch命名为up（此分支用于拉取（Pull）已经更新好的项目），已经建好了的，直接切换到up分支，右键项目Git-->Repository-->Pull，拉取新的项目；
+		up分支Pull成功之后，切换至master分支，选择up分支，选择merge功能，对本地代码进行合并，完成本地仓库代码修改；
+		github上Fork项目的更新：在IDEA刚合并好的master分支中右键项目，Git-->Repository-->Push(快捷键Ctrl+Shift+K，此处可能与搜狗输入法冲突)，提交至github我们fork下来的项目中。
+		
+	
+		
+	5.5 IDEA中的git操作：
+		5.5.1 添加git版本控制
+			VCS-->Import into Version Control-->Create Git Repository
+		5.5.2 本地项目添加至github
+			VCS-->Import into Version Control-->Share Project on GitHub
+		
+		
+6. IDEA中的javaScriptDebug，需要浏览器安装插件，Google中的插件库搜索JetBrains IDE Support，Firefox。。。。
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
