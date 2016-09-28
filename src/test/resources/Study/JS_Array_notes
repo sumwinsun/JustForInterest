@@ -1,0 +1,236 @@
+JavaScript 数组操作
+    学习网址：http://blog.csdn.net/wrian_ban/article/details/51082364
+
+1. split()生成数组
+事例：
+    var str='nice to meet you';
+    var arr=str.split(" ");
+    for(var i=0;i<arr.length;i++){
+        console.log(arr[i]);
+    }
+结果：
+    nice
+    to
+    meet
+    you
+
+2. indexOf()&lastIndexOf()索引
+事例：
+    var arr=['hi','hello','halo','hello'];
+    console.log(arr.indexOf('hello'）);
+    console.log(arr.lastIndexOf('hello'));
+结果：1 3
+
+3. join()&toString()数组转化字符串
+事例：
+    var arr=['hi','hello','halo','hello'];
+    console.log(arr.join());
+    console.log(arr.toString());
+    console.log(arr.join('||'));
+结果：
+    hi,hello,halo,hello
+    hi,hello,halo,hello
+    hi||hello||halo||hello
+
+4. splice() & concat()由已有数组创建新数组
+    4.1 concat()合并多个数组，A.concat(B,C)将生成一个新数组，并且顺序由A->C;
+        splice(a,b,c)有三个参数，功能也由这三个参数决定，当只有一个参数时和slice只有一个参数一样从该参数为索引一直截取到最后一个元素,
+        当只有两个参数时，则意味从索引a开始截取b个元素，当有三个参数时则意味从索引a开始截取b个元素并在此索引处插入c元素，c元素可以为多个元素。
+
+    4.2 splice()函数会对原数组进行分割，原数组数据会改变；但是concat函数不会让原数组变化
+
+事例：
+    var arr1=['hi1','hello1','halo1','hello1'];
+    var arr2=['hi2','hello2','halo2','hello2'];
+    console.log(arr1.join());                           hi1,hello1,halo1,hello1
+    console.log(arr2.join());                           hi2,hello2,halo2,hello2
+    var arr3=arr1.concat(arr2);
+    var arr4=arr1.splice(2,1);
+    console.log(arr1.join());                           hi1,hello1,hello1
+    console.log(arr2.join());                           hi2,hello2,halo2,hello2
+    console.log(arr3.join());                           hi1,hello1,halo1,hello1,hi2,hello2,halo2,hello2
+    console.log(arr4.join());                           halo1
+
+5. push()& unshift()为数组添加元素
+    push()将元素添加到数组末尾。
+    unshift()将元素添加到数组开头。
+事例：
+    var arr=['b','c','d'];
+    console.log(arr.join());    b,c,d
+    arr.push('e');
+    console.log(arr.join());    b,c,d,e
+    arr.unshift('a');
+    console.log(arr.join());    a,b,c,d,e
+
+6. pop() & shift()为数组删除元素
+    pop()将数组末尾元素删除。
+    shift()将数组开头元素删除。
+事例：
+    var arr=['a','b','c','d','e'];
+    console.log(arr.join());
+    arr.pop();
+    console.log(arr.join());
+    arr.shift();
+    console.log(arr.join());
+
+7. reverse() & sort()为数组排序
+事例：
+    var arr=['a','b','c','d','e'];
+    console.log(arr.join());
+    arr.reverse();
+    console.log(arr.join());            e,d,c,b,a
+
+8. 不生成新数组的迭代器
+   8.1  forEach(func)
+       forEach()接受一个函数作为参数，对数组每一个元素执行该函数。该函数没有返回值。他是只读操作，不会改变原始数组，如果希望改变元素数组··
+       目前我没想到使用什么方法，姑且先使用map（），将生成了新元素的数组赋值到原始数组达到目的。
+       事例：
+            var arr=[1,2,3,4,5,6];
+            function square(num){
+                console.log(num+'的平方为'+num*num)
+            }
+            arr.forEach(square);
+       结果：
+            1的平方为1
+            2的平方为4
+            3的平方为9
+            4的平方为16
+            5的平方为25
+            6的平方为36
+
+   8.2  every(func)
+        every()接受一个返回值为bool类型的的函数，对数组每一个元素执行该函数，如果对于所有的元素该函数都返回true，则every()返回true。
+        事例：
+           var arr=[1,2,3,4,5,6];
+           function bigger(num){
+               return num >= 1;
+           }
+           arr.every(bigger);
+        结果： true
+
+   8.3  some(func)
+        some()接受一个返回值为bool类型的的函数，对数组每一个元素执行该函数，只要有一个元素执行该函数返回true，则some()返回true。
+
+   8.4  reduce(func)
+        reduce()接受一个函数作为参数，对数组每一个元素执行该函数返回一个值，reduce会对结果进行累加，最后返回累加值。
+        事例：
+            var arr=[1,2,3,4,5,6,7,8,9];
+            function add(e,f) {
+                return e+f;
+            }
+            var arrStr=arr.reduce(add);
+            console.log(arr.join());
+            console.log(arrStr);
+        结果：
+            1,2,3,4,5,6,7,8,9
+            45
+   8.5  reduceRight(func)
+        reduceRight()接受一个函数作为参数，倒序对数组每一个元素执行该函数返回一个值，reduce会对结果进行累加，最后返回累加值
+        事例：
+            var arr=['1','2','3','4','5','6','7','8','9'];
+            function add(e,f) {
+                return e+f;
+            }
+            var arrStr1=arr.reduce(add);
+            var arrStr2=arr.reduceRight(add);
+            console.log(arr.join());
+            console.log(arrStr1);
+            console.log(arrStr2);
+        结果：
+            1,2,3,4,5,6,7,8,9
+            123456789
+            987654321
+
+9. 生成新数组的迭代器
+    9.1     map()
+            与 forEach()类似，接受一个函数作为参数，对数组每一个元素执行该函数，但该函数有返回值
+        事例：
+            var arr1=[1,2,3,4,5,6];
+            function square(num){
+                return num*num;
+            }
+            var arr2=arr1.map(square);
+            console.log(arr1);
+            console.log(arr2);
+        结果：
+        [1, 2, 3, 4, 5, 6]
+        [1, 4, 9, 16, 25, 36]
+
+    9.2     filter()
+            与every()相似接受一个返回值为bool类型的的函数，对数组每一个元素执行该函数，filter会返回一个新数组，新数组包括执行该函数返回值为true的所有元素。
+        事例：
+            var arr1=[1,2,3,4,5,6];
+            function iseven(num){
+                return num%2==0;
+            }
+            var arr2=arr1.filter(iseven);
+            console.log(arr1);
+            console.log(arr2);
+        结果：
+            [1, 2, 3, 4, 5, 6]
+            [2, 4, 6]
+
+10. 复制数组
+    10.1    浅层复制（浅度复制即将一个数组直接赋值给另一个数组，这只是为原先的数组增加了一个引用而已）
+        事例：
+            var arr1=[1,2,3,4,5,6];
+            var arr2=arr1;
+            console.log(arr1);
+            console.log(arr2);
+            arr1[0]=9999;
+            console.log(arr1);
+            console.log(arr2);
+        结果：
+            [1, 2, 3, 4, 5, 6]
+            [1, 2, 3, 4, 5, 6]
+            [9999, 2, 3, 4, 5, 6]
+            [9999, 2, 3, 4, 5, 6]
+
+    10.2    深层复制（我们可以自定义一个深度复制copy()方法，具体看事例）
+        事例：
+            var arr1=[1,2,3,4,5,6];
+            var arr2;
+            copy(arr1,arr2);
+            console.log(arr1.join());
+            console.log(arr2.join());
+
+            arr1[0]=9999;
+            console.log(arr1.join());
+            console.log(arr2.join());
+            function copy (arr1,arr2) {
+                for (var i = 0; i <arr1.length; i++) {
+                    arr2[i]=arr1[i];
+                };
+            }
+        结果：
+            1,2,3,4,5,6
+            1,2,3,4,5,6
+            9999,2,3,4,5,6
+            1,2,3,4,5,6
+
+11. 创建二维数组
+    Array.matrix=function(row,col,int){
+        var arr=[];
+        for (var i = 0; i < row; i++) {
+            var cols=[];
+            for (var j = 0; j < col; j++) {
+                cols[j]=int;
+            };
+            arr[i]=cols;
+        };
+        return arr;
+    }
+    var nums=Array.matrix(5,5,'Liz');
+    console.log(nums[1]);
+    console.log(nums.join());
+
+12. 拓展练习
+蛇形遍历二维数组：
+https://segmentfault.com/q/1010000005596715
+
+
+
+
+
+
+
