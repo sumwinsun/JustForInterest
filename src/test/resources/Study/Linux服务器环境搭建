@@ -1,0 +1,37 @@
+一、 Ubuntu开启服务器ssh/sftp服务
+    1. 执行命令 sudo apt install openssh-server ，安装ssh服务
+    2. 执行命令 sudo nano /etc/ssh/sshd_config ，进入Nano文件编辑界面，将 PermitRootLogin 的值改为 yes ,Ctrl+X 保存 y
+    3. 重启系统 reboot now
+
+二、 Java 环境搭建
+    1.查看系统java版本
+        java -version
+
+        如果java版本过低，按以下操作卸载：
+        #！待添加！#
+
+    2.下载相应版本的jdk
+            此次下载文件为：jdk-7u79-linux-x64.tar.gz
+        2.1 打开FileZilla，连接服务器，将下载的文件，上传到服务器
+
+        2.2 服务器端，进入存放文件的目录，进行解压和移动文件
+            <1> 输入解压命令：tar -xvzf jdk-7u79-linux-x64.tar.gz
+            <2> 执行命令：cp -a jdk1.7.0_79 /usr/local/java ，copy解压后的文件到 /usr/local/java 下
+        2.3 添加jdk7.0到系统环境变量
+            <1> 执行命令：nano /etc/profile，进入文件编辑界面
+            <2> 在文件末尾添加以下内容：
+                    export JAVA_HOME=/usr/local/java/jdk1.7.0_79  
+                    export JRE_HOME=/usr/local/java/jdk1.7.0_79/jre  
+                    export PATH=$PATH:/usr/local/java/jdk1.7.0_79/bin  
+                    export CLASSPATH=./:/usr/local/java/jdk1.7.0_79/lib:/usr/local/java/jdk1.7.0_79/jre/lib
+                Ctrl+X 保存退出
+            <3> 执行命令：source /etc/profile，使改动生效
+        2.4 验收安装成果：java -version
+
+三、 安装MySQL
+    1.官网下载Linux下安装包，地址： http://dev.mysql.com/downloads/mysql/ 选择Linux版本
+    2.打开FileZilla，连接服务器，将下载的文件，上传到服务器（文件名：mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz）
+    3.执行解压命令： tar -xvzf mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz
+    3.执行命令： cp mysql-5.7.16-linux-glibc2.5-x86_64 /usr/local/mysql -r，将文件放到指定目录下
+
+
