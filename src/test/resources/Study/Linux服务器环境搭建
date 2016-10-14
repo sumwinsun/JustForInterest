@@ -3,6 +3,7 @@
     2. 执行命令 sudo nano /etc/ssh/sshd_config ，进入Nano文件编辑界面，将 PermitRootLogin 的值改为 yes ,Ctrl+X 保存 y
     3. 重启系统 reboot now
 
+
 二、 Java 环境搭建
     1.查看系统java版本
         java -version
@@ -28,10 +29,80 @@
             <3> 执行命令：source /etc/profile，使改动生效
         2.4 验收安装成果：java -version
 
-三、 安装MySQL
-    1.官网下载Linux下安装包，地址： http://dev.mysql.com/downloads/mysql/ 选择Linux版本
-    2.打开FileZilla，连接服务器，将下载的文件，上传到服务器（文件名：mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz）
-    3.执行解压命令： tar -xvzf mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz
-    3.执行命令： cp mysql-5.7.16-linux-glibc2.5-x86_64 /usr/local/mysql -r，将文件放到指定目录下
 
+三、 安装MySQL      (主教程地址: http://blog.csdn.net/wb96a1007/article/details/51559741）
+    1. 安装前准备（安装环境为Ubuntu)
+        <1> 确认是否已经安装过mysql
+            执行：rpm -qa | grep mysql （如果提示没有rpm命令，按提示语句进行安装）
+            如果显示已经安装过，执行： rpm -e mysql-libs-5.1.52.x86_64 --nodeps  进行移除
+        <2>.查看是否创建了mysql用户和组
+            查询命令：
+                    cat /etc/group | grep mysql
+                    cat /etc/passwd | grep mysql
+            如果不存在，执行创建命令：
+                    groupadd mysql
+                    useradd -r -g mysql mysql
+                    //useradd -r参数表示mysql用户是系统用户，不可用于登录系统。
+        <3>.官网下载Linux下安装包
+            地址： http://dev.mysql.com/downloads/mysql/ 选择Linux版本
+            打开FileZilla，连接服务器，将下载的文件，上传到服务器（文件名：mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz）
 
+    2. 正式安装过程：
+        2.1 解压，并cp文件，修改目录权限
+            <1>.解压，复制文件
+                    切换到文件存放的路径，执行解压命令： tar xvf mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz
+                    执行命令：cp -a mysql-5.7.16-linux-glibc2.5-x86_64/ /usr/local/mysql ，拷贝文件，注意添加目录后的 "/"
+            <2>.修改目录权限
+                切换到/usr/local目录下：cd /usr/local
+                执行权限修改命令：
+                    chown -R mysql mysql/
+                    chgrp -R mysql mysql/
+
+        2.2 安装
+            **~** 注：Ubuntu中没有Libaio的支援，所以需要先安装libaio，执行命令：sudo apt-get install libaio-dev
+
+            <1>.进入mysql目录
+                cd mysql/
+            <2>.执行安装命令：
+                bin/mysql_install_db --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data/
+            <3>.拷贝配置文件到/etc下
+                cp -a ./support-files/my-default.cnf /etc/my.cnf
+                cp -a ./support-files/mysql.server  /etc/init.d/mysql
+            <4>.进入mysql下的bin目录
+                cd bin
+            <5>.开启守护进程，执行：
+                ./mysqld_safe --user=mysql &
+                执行完以上命令，稍等一会儿，Ctrl+C 退出
+            <6>.重启mysql服务（此处可能由于系统的不同会有不同）
+                Ubuntu系统：
+                    service mysql restart（目前遇到个问题，服务并未生效，只能重启系统，才能执行该语句了；但是重启后，需要自行启动mysql ：service mysql restart）
+                其他系统（Centos等，此操作并未验证，因为本次实验为Ubuntu）：
+                    /etc/init.d/mysql restart
+                    据说还可设置开机启动： chkconfig --level 35 mysqld on（Ubuntu没有chkconfig命令，未验证）
+
+        2.3 初始化mysql的root账号密码
+                mysql5.7会生成一个初始化密码，而在之前的版本首次登陆不需要登录。
+            <1>.读取文件中设置的初始化密码 (执行这步，需要切换到 /usr/local/mysql/bin 目录下）
+                cat /root/.mysql_secret
+                # Password set for user 'root@localhost' at 2016-06-01 15:23:25
+                =xxxxxR5H9>
+                此时的密码就是："=xxxxxR5H9>"
+            <2>.连接mysql
+                ./mysql -u root -p
+                输入上一步获取的密码
+            <3>.重置密码
+                SET PASSWORD = PASSWORD('123456');
+                flush privileges;
+        2.4 添加远程访问权限
+            注：紧接着上一步操作，如果已经exit退出mysql，请先连接mysql
+            use mysql;
+            update user set host='%' where user = 'root';
+            select host, user from user;    //查看修改结果
+            exit 退出mysql控制台
+            重启mysql服务生效，如 2.2<6> 操作即可
+
+        2.5 设置mysql服务开机启动：
+                http://blog.csdn.net/gisredevelopment/article/details/51546980
+            <1>.执行命令：sysv-rc-conf --list，如果提示没有安装sysv，执行提示安装语句（sudo apt install sysv-rc-conf），然后在执行 sysv-rc-conf --list，查看是否有mysql服务存在，以下步骤必须要存在mysql才可
+            <2>.执行 sysv-rc-conf --level 345 mysql on ，开启mysql开机自启动
+            <3>.重启系统即可
