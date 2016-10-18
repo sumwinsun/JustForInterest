@@ -22,13 +22,13 @@
 
 三、  基本命令：
 1. uname -r 查看系统Linux版本
-2. date 时间：
+   date 时间：
     date +%Y/%m/%d      格式化时间显示 "年/月/日"
 
-3. cal 日历：
+2. cal 日历：
     cal [month] [year]  产看指定年月的日历
 
-4. man 查看命令介绍
+3. man 查看命令介绍
     例如：man date
     会看到date后面有个代号“1”，表示这个命令是可执行命令，具体数字对应的关系如下，158为关键点
         代号 代表内容
@@ -43,7 +43,7 @@
         9   跟kernel有关的文件
 
 
-四、 ls -al   结果详解
+4. ls -al   结果详解
 
         [root@www ~]# ls -al
         total 156
@@ -118,8 +118,6 @@
                     x   可执行---即，可进入
               注：：：：：如果用户Bob对文件A的权限为0，但是Bob拥有该文件A所在目录的w权限，该用户依然可以对A进行重命名、删除、移动的权限！！！
 
-
-
     例子：
         [-][rwx][r-x][r--]
          1  234  567  890
@@ -127,6 +125,104 @@
        234为：拥有者的权限，本例中为可读、可写、可执行(rwx)；
        567为：同群组使用者权限，本例中为可读可执行(rx)；
        890为：其他使用者权限，本例中为可读(r)
+
+
+    5. 目录相关操作：
+        5.1 目录基础部分
+            .         代表此层目录
+            ..        代表上一层目录
+            -         代表前一个工作目录
+            ~         代表‘目前使用者身份’所在的家目录
+            ~account  代表 account 这个使用者的家目录(account是个帐号名称)
+
+        5.2 命令部分
+            5.2.1 cd：变换目录
+
+            5.2.2 pwd：显示目前的目录
+                pwd -P  显示连结档
+                其实有趣的是那个 -P 的选项啦！他可以让我们取得正确的目录名称，而不是以连结档的路径来显示的。
+                如果你使用的是CentOS 5.x的话，刚刚好/var/mail是/var/spool/mail的连结档， 所以，透过到/var/mail下达pwd -P就能够知道这个选项的意义啰～ ^_^
+
+            5.2.3 mkdir：建立一个新的目录
+                [root@www ~]# mkdir [-mp] 目录名称
+
+                选项与参数：
+                -m ：设定档案的权限喔！直接设定，不需要看预设权限 (umask) 的脸色～
+                -p ：帮助你直接将所需要的目录(包含上层目录)递归建立起来！
+
+                范例：请到/tmp底下尝试建立数个新目录看看：
+                [root@www ~]# cd /tmp
+                [root@www tmp]# mkdir test    <==建立一名为 test 的新目录
+                [root@www tmp]# mkdir test1/test2/test3/test4
+                mkdir: cannot create directory `test1/test2/test3/test4':
+                No such file or directory       <== 没办法直接建立此目录啊！
+
+                [root@www tmp]# mkdir -p test1/test2/test3/test4
+                # 加了这个 -p 的选项，可以自行帮你建立多层目录！
+
+                范例：建立权限为rwx--x--x的目录
+                [root@www tmp]# mkdir -m 711 test2
+                [root@www tmp]# ls -l
+                drwxr-xr-x  3 root  root 4096 Jul 18 12:50 test
+                drwxr-xr-x  3 root  root 4096 Jul 18 12:53 test1
+                drwx--x--x  2 root  root 4096 Jul 18 12:54 test2
+
+                # 仔细看上面的权限部分，如果没有加上 -m 来强制设定属性，系统会使用预设属性。
+                # 那么你的预设属性为何？这要透过底下介绍的 umask 才能了解喔！ ^_^
+
+            5.2.4 rmdir：删除一个“空”的目录
+                那如果要将所有目录下的东西都杀掉呢？！ 这个时候就必须使用‘ rm -r test ’啰！
+
+                [root@www ~]# rmdir [-p] 目录名称
+
+                选项与参数：
+                -p ：连同上层‘空的’目录也一起删除
+
+                范例：将于mkdir范例中建立的目录(/tmp底下)删除掉！
+                [root@www tmp]# ls -l   <==看看有多少目录存在？
+                drwxr-xr-x  3 root  root 4096 Jul 18 12:50 test
+                drwxr-xr-x  3 root  root 4096 Jul 18 12:53 test1
+                drwx--x--x  2 root  root 4096 Jul 18 12:54 test2
+                [root@www tmp]# rmdir test   <==可直接删除掉，没问题
+                [root@www tmp]# rmdir test1  <==因为尚有内容，所以无法删除！
+
+                rmdir: `test1': Directory not empty
+                [root@www tmp]# rmdir -p test1/test2/test3/test4
+                [root@www tmp]# ls -l        <==您看看，底下的输出中test与test1不见了！
+                drwx--x--x  2 root  root 4096 Jul 18 12:54 test2
+                # 瞧！利用 -p 这个选项，立刻就可以将 test1/test2/test3/test4 一次删除～
+                # 不过要注意的是，这个 rmdir 仅能‘删除空的目录’喔！
+
+
+    6. 档案与目录管理：
+        6.1 档案与目录的检视： ls
+            [root@www ~]# ls [-aAdfFhilnrRSt] 目录名称
+            [root@www ~]# ls [--color={never,auto,always}] 目录名称
+            [root@www ~]# ls [--full-time] 目录名称
+
+            选项与参数：
+            -a  ：全部的档案，连同隐藏档( 开头为 . 的档案) 一起列出来(常用)
+            -A  ：全部的档案，连同隐藏档，但不包括 . 与 .. 这两个目录
+            -d  ：仅列出目录本身，而不是列出目录内的档案资料(常用)
+            -f  ：直接列出结果，而不进行排序 (ls 预设会以档名排序！)
+            -F  ：根据档案、目录等资讯，给予附加资料结构，例如：
+                  *:代表可执行档； /:代表目录； =:代表 socket 档案； |:代表 FIFO 档案；
+            -h  ：将档案容量以人类较易读的方式(例如 GB, KB 等等)列出来；
+            -i  ：列出 inode 号码，inode 的意义下一章将会介绍；
+            -l  ：长资料串列出，包含档案的属性与权限等等资料；(常用)
+            -n  ：列出 UID 与 GID 而非使用者与群组的名称 (UID与GID会在帐号管理提到！)
+            -r  ：将排序结果反向输出，例如：原本档名由小到大，反向则为由大到小；
+            -R  ：连同子目录内容一起列出来，等于该目录下的所有档案都会显示出来；
+            -S  ：以档案容量大小排序，而不是用档名排序；
+            -t  ：依时间排序，而不是用档名。
+            --color=never  ：不要依据档案特性给予颜色显示；
+            --color=always ：显示颜色
+            --color=auto   ：让系统自行依据设定来判断是否给予颜色
+            --full-time    ：以完整时间模式 (包含年、月、日、时、分) 输出
+            --time={atime,ctime} ：输出 access 时间或改变权限属性时间 (ctime)
+                                   而非内容变更时间 (modification time)
+
+        6.2 复制、删除与移动： cp, rm, mv
 
 
 
