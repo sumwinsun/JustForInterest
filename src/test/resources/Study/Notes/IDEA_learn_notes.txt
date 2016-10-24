@@ -112,6 +112,9 @@
 	````Ctrl+Alt+Space	类名或接口名提示
 		Ctrl+Alt+B	调到具体的实现方法中
 		CTRL+ALT+F12      资源管理器打开文件夹
+
+            Ctrl+Alt+S      打开系统设置
+            Ctrl+Alt+Shift+S     打开项目设置
 		
 	<7> Alt+Shift相关：
 	````Alt+Shift+N		新建task窗口，应用场景：针对不同的业务，做不同的task切换
