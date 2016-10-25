@@ -101,6 +101,14 @@
             exit 退出mysql控制台
             重启mysql服务生效，如 2.2<6> 操作即可
 
+            （如果想关闭远程连接功能：
+                use mysql;
+                update user set host='localhost' where user = 'root';
+                select host, user from user;    //查看修改结果
+                exit 退出mysql控制台
+                重启mysql服务生效，如 2.2<6> 操作即可
+            ）
+
         2.5 设置mysql服务开机启动：
                 http://blog.csdn.net/gisredevelopment/article/details/51546980
             <1>.执行命令：sysv-rc-conf --list，如果提示没有安装sysv，执行提示安装语句（sudo apt install sysv-rc-conf），然后在执行 sysv-rc-conf --list，查看是否有mysql服务存在，以下步骤必须要存在mysql才可

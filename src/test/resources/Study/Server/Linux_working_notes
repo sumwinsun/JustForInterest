@@ -1,0 +1,6 @@
+1. mtr双向测试指的是：类似Windows下的ping命令，用于测试网络的链接状态
+    指令：mtr -c 100 --report IP地址
+
+2. mysql导入大量数据失败，提示：
+    需要在mysql安装目录的 my.ini 中的 [mysqld] 添加以下代码：
+    max_allowed_packet=100M
