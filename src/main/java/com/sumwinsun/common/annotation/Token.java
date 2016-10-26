@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 用于处理数据重复提交的 annotation，结合拦截器使用
  * Created by Administrator on 2016/9/21 0021.
+ * http://www.cnblogs.com/peida/archive/2013/04/24/3036689.html
  * @Retention(RetentionPolicy.RUNTIME)          ：声明注解为运行时注解，
         注解@Retention可以用来修饰注解，是注解的注解，称为元注解。
         Retention注解有一个属性value，是RetentionPolicy类型的，Enum RetentionPolicy是一个枚举类型，
@@ -20,6 +21,8 @@ import java.lang.annotation.Target;
  *      注解@Target也是用来修饰注解的元注解，它有一个属性ElementType也是枚举类型，
         值为：ANNOTATION_TYPE CONSTRUCTOR  FIELD LOCAL_VARIABLE METHOD PACKAGE PARAMETER TYPE
         如@Target(ElementType.METHOD) 修饰的注解表示该注解只能用来修饰在方法上。
+ * @
+
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

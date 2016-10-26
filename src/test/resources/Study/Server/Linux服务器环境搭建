@@ -17,7 +17,7 @@
 
         2.2 服务器端，进入存放文件的目录，进行解压和移动文件
             <1> 输入解压命令：tar -xvzf jdk-7u79-linux-x64.tar.gz
-            <2> 执行命令：cp -a jdk1.7.0_79 /usr/local/java ，copy解压后的文件到 /usr/local/java 下
+            <2> 执行命令：cp -a jdk1.7.0_79 /usr/local/java ，copy解压后的文件到 /usr/local/java 下（注“jdk1.7.0_79"后面不要加 ”/“)
         2.3 添加jdk7.0到系统环境变量
             <1> 执行命令：nano /etc/profile，进入文件编辑界面
             <2> 在文件末尾添加以下内容：

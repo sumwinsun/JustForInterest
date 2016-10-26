@@ -2,5 +2,22 @@
     指令：mtr -c 100 --report IP地址
 
 2. mysql导入大量数据失败，提示：
-    需要在mysql安装目录的 my.ini 中的 [mysqld] 添加以下代码：
-    max_allowed_packet=100M
+	Windows下处理方式：
+		需要在mysql安装目录的 my.ini 中的 [mysqld] 添加以下代码：
+		max_allowed_packet=100M
+	Linux下处理方式：
+		找到配置的mysql启动文件 my.cnf
+		（如果找不到，可以执行以下命令查询： find / -name "my.cnf"）
+		插入如下代码：
+			max_allowed_packet=300M
+			（下面两句貌似不需要）
+			wait_timeout=200000
+			interactive_timeout = 200000
+		重启mysql服务：service mysql restart
+
+3. 创建快捷方式
+	ln -s /tomcat/bin/startup.sh ./start01
+	在当前路径下，创建名为start01的快捷方式，快捷方式指向 /tomcat/bin/startup.sh
+	ll
+	查看当前路径下文件（等效于ls -l）
+	
