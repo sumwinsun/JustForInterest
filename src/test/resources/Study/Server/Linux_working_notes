@@ -21,3 +21,8 @@
 	ll
 	查看当前路径下文件（等效于ls -l）
 	
+4. Linux下的解压war包
+	创建要解压的目录：mkdir /usr/local/test
+	进入解压目录：cd /usr/local/test
+	执行解压命令：jar -xvf /usr/local/src/xx.war 
+	
