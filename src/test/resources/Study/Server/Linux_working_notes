@@ -26,3 +26,45 @@
 	进入解压目录：cd /usr/local/test
 	执行解压命令：jar -xvf /usr/local/src/xx.war 
 	
+5. Linux下添加mysql优化：
+	 查找my.cnf文件的位置：locate my.cnf
+	 编辑文件，添加如下文字：
+		server-id=1392245440
+		slow_query_log = 1		##开启慢查询日志记录
+		slow_query_log_file =/usr/local/mysql/mysql_slow.log    ##慢查询日志记录位置
+		log-bin=mysqlbin-log
+		lower_case_table_names =1		##忽略表名大小写
+		
+6.  Linux下的mysql数据导入导出
+	--导出所有数据、表结构和存储过程
+		mysqldump -uroot -p -R 库名(sanniu) > 存储路径(/home/data20161101.sql)
+	--仅导出存储过程
+		mysqldump -uroot -p -n -d -t -R sanniu > /home/proc.sql
+		
+	注：参数说明
+		-n: --no-create-db
+		-d: --no-data
+		-t: --no-create-info
+		-R: --routines Dump stored routines (functions and procedures)
+		
+		-E, --events        Dump events.
+		-R, --routines      Dump stored routines (functions and procedures).
+		--triggers          Dump triggers for each dumped table.
+
+7. 查询tomcat下的访问日志
+	tail -f localhost_access_log.2016-11-25.txt 
+	
+8. Tomcat优化相关
+	配置 请求头大小maxHttpHeaderSize，关闭socket请求
+	<Connector port="9080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="9443" maxHttpHeaderSize="81920" bufferSize="8192" sockedBuffer="655360" />
+	配置 Host autoDeploy="false" deployOnStartup="false" 防止重复启动两个定时器		   
+    <Host name="localhost"  appBase="webapps"
+                unpackWARs="true" autoDeploy="false" deployOnStartup="false">
+                        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+                                       prefix="localhost_access_log" suffix=".txt"
+                                                      pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+                <Context path="" docBase="web/" crossContext="true"  reloadable="false">
+                </Context>
+      </Host>

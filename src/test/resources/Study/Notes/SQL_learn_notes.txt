@@ -1,0 +1,40 @@
+1. mysql中给字段添加删除唯一索引
+	CREATE TABLE `NewTable` (
+	`username`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+	`password`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+	`id`  int(11) NULL DEFAULT NULL ,
+	`orderId` VARCHAR(12) 
+	)
+	ENGINE=InnoDB
+	DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+	ROW_FORMAT=COMPACT
+	;
+	drop table newtable;
+	
+	-- 添加唯一索引
+	ALTER TABLE newtable ADD UNIQUE(`orderId`);
+
+	-- 插入测试
+	insert into newtable VALUES(1,1,1,1);
+	insert into newtable VALUES(2,2,2,1);
+
+	select * from newtable;
+	DELETE from newtable where id =2;
+	-- 查询和删除唯一索引
+	show INDEX from newtable;
+	ALTER table newtable DROP INDEX orderId;
+	
+2. Group by的时候，联合起之前各个表中的字段值的方法
+
+	GROUP_CONCAT(`字段名` ORDER BY `排序字段` )
+
+3. 解决mysql创建账户没有执行存储过程的问题
+	问题报错：
+		java.sql.SQLException: User does not have access to metadata required to determine stored procedure parameter types. If rights can not be granted, configure connection with "noAccessToProcedureBodies=true" to have driver generate parameters that represent INOUT strings irregardless of actual parameter types.
+		解决办法：
+	数据库执行以下语句：
+		GRANT SELECT ON mysql.proc TO 'user'@'localhost';  -- 给用户添加proc的查询权限
+		GRANT execute ON 库名.* TO '用户名'@'登陆地址';
+		
+4. mysql查询有哪些连接
+	show processlist; 
