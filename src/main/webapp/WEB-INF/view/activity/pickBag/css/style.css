@@ -1,0 +1,8 @@
+@charset "UTF-8";
+*{
+    margin:0 0;
+    padding:0 0;
+}
+#canvas{
+    background-color: #959ca8;
+}
