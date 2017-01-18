@@ -1,0 +1,39 @@
+@charset "UTF-8";
+*{
+    margin:0 0;
+    padding:0 0;
+    font-family:"Microsoft Yahei";
+}
+.con{
+    position: relative;
+    overflow: hidden;
+}
+.score_con{
+    display: block;
+    position: absolute;
+    left:10px;
+    top:5px;
+    z-index: 1;
+    font-size:15px;
+    color:#fff;
+}
+#time_left{
+    display: block;
+    position: absolute;
+    right:10px;
+    top:5px;
+    z-index: 1;
+    font-size:15px;
+    color:#fff;
+}
+.bg{
+    position: absolute;
+    top:0;
+    left:0;
+}
+#canvas{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 10;
+}
