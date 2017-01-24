@@ -38,3 +38,11 @@
 		
 4. mysql查询有哪些连接
 	show processlist; 
+	
+5. mybatis insert语句返回主键值
+	 在mapper.xml中加上 useGeneratedKeys="true" keyProperty="id"
+	 
+6. Mysql日期格式化比较方法
+	DATE_FORMAT(date,format) 
+		For Example:
+		DATE_FORMAT(bs.createdate, '%y%m%d') = CONCAT(DATE_FORMAT(now(),'%y%m'), 18)

@@ -1,0 +1,14 @@
+
+Create Date : 2017年1月5日09:35:05
+
+
+1. 获取iframe下的打开页面真实URL
+
+	在许多时候我们在用iframe的时候都会做分页操作 iframe内部的url跳转将不能直接通过iframe的src属性来获得，因为可能受到拦截器或者过滤器的拦截，实际加载页面并非src的链接 
+
+	iframe的当前url的获取方法 
+
+	代码如下:
+	parent.document.getElementById("content_info").contentWindow.location.href 
+
+	其中：content_info为iframe的id
