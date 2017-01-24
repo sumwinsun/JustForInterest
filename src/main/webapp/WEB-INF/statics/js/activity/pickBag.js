@@ -112,19 +112,19 @@ function initData(imageSrc, bgImageSrc) {
     // var time = $('#time_left').text();
     time = time.substring(0, time.length-1);
     initCanvas();
-    gameInterval = setInterval(
-        function () {
-            if (clippingRegionArray.length > 0) {
-                //清空动画展示，防止又去重画敲击动画
-                if (hitAnimation.length > 0)
-                    hitAnimation.forEach(removeHitAnimation);
-                clippingRegionArray = new Array();
-                context.clearRect(0, 0, canvasWidth, canvasHeight);
-                context.save();
-            }
-            initCanvas();
-        }, 1000
-    )
+    // gameInterval = setInterval(
+    //     function () {
+    //         if (clippingRegionArray.length > 0) {
+    //             //清空动画展示，防止又去重画敲击动画
+    //             if (hitAnimation.length > 0)
+    //                 hitAnimation.forEach(removeHitAnimation);
+    //             clippingRegionArray = new Array();
+    //             context.clearRect(0, 0, canvasWidth, canvasHeight);
+    //             context.save();
+    //         }
+    //         initCanvas();
+    //     }, 2000
+    // )
     var timeInterval = setInterval(
         function () {
             time--;
