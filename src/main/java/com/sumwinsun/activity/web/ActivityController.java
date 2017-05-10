@@ -107,4 +107,13 @@ public class ActivityController {
 
         return new RequestResult<>(true, now.getTime());
     }
+
+    @RequestMapping(value = "/pickBag")
+    public String pickBag(){
+        return "/activity/pickBag/index";
+    }
+    @RequestMapping(value = "/flow")
+    public String flow(){
+        return "/activity/flow/index";
+    }
 }

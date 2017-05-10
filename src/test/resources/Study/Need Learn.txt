@@ -1,5 +1,13 @@
 1.Maven 建立本地仓库
 	Add Date:2017年1月6日17:52:07
+		maven--私服的搭建（Nexus的使用）	2017年2月24日15:43:12
+		http://blog.csdn.net/shenshen123jun/article/details/9084293
 	
 2.	[java爬虫采集Jar包系统视频教程] 
 	http://www.java1234.com/a/yuanchuang/jar/
+	
+3. [一头扎进HttpClient视频教程] 
+	http://www.java1234.com/a/yuanchuang/httpclient/
+	
+4. html编辑
+http://codepen.io/seanfree/pen/dNXrrr

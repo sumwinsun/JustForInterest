@@ -68,3 +68,12 @@
                 <Context path="" docBase="web/" crossContext="true"  reloadable="false">
                 </Context>
       </Host>
+	  
+	  
+9. 重启nignx
+	进入Nginx的安装目录：/server/nginx-1.9.2-ssh/sbin
+	执行命令：./nginx -s reload
+	
+10. 启动svn
+	sudo svnserve -d -r /data/svn/repo/
+	
